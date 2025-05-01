@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Результат прогноза</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="result-box">
+        <h2>Результат предсказания:</h2>
+        <p class="result">{{ prediction }}</p>
+        <a href="/" class="back-link">← Вернуться к форме</a>
+    </div>
+</body>
+</html>
