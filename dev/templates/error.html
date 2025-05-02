@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Ошибка</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="error-container">
+        <h2>Произошла ошибка</h2>
+        <div class="error-message">
+            {{ error_message }}
+        </div>
+        <a href="/" class="back-btn">← Вернуться к форме</a>
+    </div>
+</body>
+</html>

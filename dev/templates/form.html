@@ -1,29 +1,167 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <title>HR Attrition Predictor</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h2>Введите данные сотрудника</h2>
-    <form action="/predict" method="post">
-        <label>Удовлетворенность работой (0-100):</label>
-        <input type="number" name="satisfaction" min="0" max="100" required>
+    <div class="form-container">
+        <h2>Введите данные сотрудника</h2>
+        <form action="/predict" method="post">
 
-        <label>Последняя оценка (0-100):</label>
-        <input type="number" name="evaluation" min="0" max="100" required>
+            <!-- Основная информация -->
+            <fieldset>
+                <legend>Основная информация</legend>
 
-        <label>Количество проектов:</label>
-        <input type="number" name="projects" required>
+                <label>Возраст (18-60):</label>
+                <input type="number" name="Age" min="18" max="60" required>
 
-        <label>Среднее количество часов в месяц:</label>
-        <input type="number" name="hours" required>
+                <label>Пол:</label>
+                <select name="Gender" required>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
 
-        <label>Лет в компании:</label>
-        <input type="number" name="tenure" required>
+                <label>Семейное положение:</label>
+                <select name="MaritalStatus" required>
+                    <option value="Single">Single</option>
+                    <option value="Married">Married</option>
+                    <option value="Divorced">Divorced</option>
+                </select>
+            </fieldset>
 
-        <input type="submit" value="Предсказать увольнение">
-    </form>
+            <!-- Профессиональная информация -->
+            <fieldset>
+                <legend>Профессиональная информация</legend>
+
+                <label>Отдел:</label>
+                <select name="Department" required>
+                    <option value="Sales">Sales</option>
+                    <option value="Research & Development">Research & Development</option>
+                    <option value="Human Resources">Human Resources</option>
+                </select>
+
+                <label>Должность:</label>
+                <select name="JobRole" required>
+                    <option value="Sales Executive">Sales Executive</option>
+                    <option value="Research Scientist">Research Scientist</option>
+                    <option value="Laboratory Technician">Laboratory Technician</option>
+                    <option value="Manufacturing Director">Manufacturing Director</option>
+                    <option value="Healthcare Representative">Healthcare Representative</option>
+                    <option value="Manager">Manager</option>
+                    <option value="Sales Representative">Sales Representative</option>
+                    <option value="Research Director">Research Director</option>
+                    <option value="Human Resources">Human Resources</option>
+                </select>
+
+                <label>Уровень образования (1-5):</label>
+                <input type="number" name="Education" min="1" max="5" required>
+
+                <label>Область образования:</label>
+                <select name="EducationField" required>
+                    <option value="Life Sciences">Life Sciences</option>
+                    <option value="Medical">Medical</option>
+                    <option value="Marketing">Marketing</option>
+                    <option value="Technical Degree">Technical Degree</option>
+                    <option value="Other">Other</option>
+                    <option value="Human Resources">Human Resources</option>
+                </select>
+
+                <label>Уровень должности (1-5):</label>
+                <input type="number" name="JobLevel" min="1" max="5" required>
+            </fieldset>
+
+            <!-- Рабочие условия -->
+            <fieldset>
+                <legend>Рабочие условия</legend>
+
+                <label>Командировки:</label>
+                <select name="BusinessTravel" required>
+                    <option value="Non-Travel">Non-Travel</option>
+                    <option value="Travel_Rarely">Travel_Rarely</option>
+                    <option value="Travel_Frequently">Travel_Frequently</option>
+                </select>
+
+                <label>Расстояние до работы (1-30 км):</label>
+                <input type="number" name="DistanceFromHome" min="1" max="30" required>
+
+                <label>Сверхурочные:</label>
+                <select name="OverTime" required>
+                    <option value="No">No</option>
+                    <option value="Yes">Yes</option>
+                </select>
+
+                <label>Вовлеченность в работу (1-4):</label>
+                <input type="number" name="JobInvolvement" min="1" max="4" required>
+
+                <label>Удовлетворенность работой (1-4):</label>
+                <input type="number" name="JobSatisfaction" min="1" max="4" required>
+
+                <label>Удовлетворенность окружением (1-4):</label>
+                <input type="number" name="EnvironmentSatisfaction" min="1" max="4" required>
+
+                <label>Удовлетворенность отношениями (1-4):</label>
+                <input type="number" name="RelationshipSatisfaction" min="1" max="4" required>
+
+                <label>Баланс работы/жизни (1-4):</label>
+                <input type="number" name="WorkLifeBalance" min="1" max="4" required>
+
+                <label>Оценка производительности (1-4):</label>
+                <input type="number" name="PerformanceRating" min="1" max="4" required>
+            </fieldset>
+
+            <!-- Финансовая информация -->
+            <fieldset>
+                <legend>Финансовая информация</legend>
+
+                <label>Ежедневная ставка (100-15000):</label>
+                <input type="number" name="DailyRate" min="100" max="15000" required>
+
+                <label>Часовая ставка (30-100):</label>
+                <input type="number" name="HourlyRate" min="30" max="100" required>
+
+                <label>Месячный доход (1000-20000):</label>
+                <input type="number" name="MonthlyIncome" min="1000" max="20000" required>
+
+                <label>Месячная ставка (2000-30000):</label>
+                <input type="number" name="MonthlyRate" min="2000" max="30000" required>
+
+                <label>Процент повышения зарплаты (10-25%):</label>
+                <input type="number" name="PercentSalaryHike" min="10" max="25" required>
+
+                <label>Уровень опционов (0-3):</label>
+                <input type="number" name="StockOptionLevel" min="0" max="3" required>
+            </fieldset>
+
+            <!-- Опыт работы -->
+            <fieldset>
+                <legend>Опыт работы</legend>
+
+                <label>Количество компаний (0-10):</label>
+                <input type="number" name="NumCompaniesWorked" min="0" max="10" required>
+
+                <label>Общий стаж работы (0-40 лет):</label>
+                <input type="number" name="TotalWorkingYears" min="0" max="40" required>
+
+                <label>Стаж в компании (0-40 лет):</label>
+                <input type="number" name="YearsAtCompany" min="0" max="40" required>
+
+                <label>В текущей роли (0-18 лет):</label>
+                <input type="number" name="YearsInCurrentRole" min="0" max="18" required>
+
+                <label>С последнего повышения (0-15 лет):</label>
+                <input type="number" name="YearsSinceLastPromotion" min="0" max="15" required>
+
+                <label>С текущим менеджером (0-17 лет):</label>
+                <input type="number" name="YearsWithCurrManager" min="0" max="17" required>
+
+                <label>Обучений в прошлом году (0-6):</label>
+                <input type="number" name="TrainingTimesLastYear" min="0" max="6" required>
+            </fieldset>
+
+            <input type="submit" value="Предсказать текучесть" class="submit-btn">
+        </form>
+    </div>
 </body>
 </html>

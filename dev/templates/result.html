@@ -6,10 +6,26 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <div class="result-box">
-        <h2>Результат предсказания:</h2>
-        <p class="result">{{ prediction }}</p>
-        <a href="/" class="back-link">← Вернуться к форме</a>
+    <div class="result-container">
+        <h2>Результат предсказания текучести</h2>
+
+        <div class="prediction-result {% if prediction.prediction == 'Yes' %}high-risk{% else %}low-risk{% endif %}">
+            <p>Прогноз: <strong>{{ 'Высокий риск увольнения' if prediction.prediction == 'Yes' else 'Низкий риск увольнения' }}</strong></p>
+            <p>Вероятность увольнения: <strong>{{ prediction.probability }}%</strong></p>
+        </div>
+
+        <div class="recommendations">
+            {% if prediction.prediction == 'Yes' %}
+                <h3>Рекомендации:</h3>
+                <ul>
+                    <li>Провести индивидуальную беседу с сотрудником</li>
+                    <li>Рассмотреть возможность повышения или ротации</li>
+                    <li>Оценить уровень удовлетворенности</li>
+                </ul>
+            {% endif %}
+        </div>
+
+        <a href="/" class="back-btn">← Проверить другого сотрудника</a>
     </div>
 </body>
 </html>
