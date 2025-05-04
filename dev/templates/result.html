@@ -3,13 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <title>Результат прогноза</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-    <div class="result-box">
-        <h2>Результат предсказания:</h2>
-        <p class="result">{{ prediction }}</p>
-        <a href="/" class="back-link">← Вернуться к форме</a>
+    <div class="result-container">
+        <h2>Результат предсказания депрессии</h2>
+
+        <div class="prediction-result {% if prediction == 1 %}high-risk{% else %}low-risk{% endif %}">
+            <p>Прогноз: <strong>{{ 'Высокий риск депрессии' if prediction == 1 else 'Низкий риск депрессии' }}</strong></p>
+            <p>Вероятность: <strong>{{ "%.1f"|format(probability * 100) }}%</strong></p>
+        </div>
+
+        <div class="recommendations">
+            {% if prediction == 1 %}
+                <h3>Рекомендации:</h3>
+                <ul>
+                    <li>Рекомендуется обратиться к специалисту</li>
+                    <li>Попробуйте увеличить продолжительность сна</li>
+                    <li>Рассмотрите возможность консультации в университетском центре психологической помощи</li>
+                </ul>
+            {% endif %}
+        </div>
+
+        <a href="/" class="back-btn">← Проверить другого студента</a>
     </div>
 </body>
 </html>

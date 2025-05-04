@@ -1,29 +1,111 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>HR Attrition Predictor</title>
+    <title>Student Depression Prediction</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h2>Введите данные сотрудника</h2>
-    <form action="/predict" method="post">
-        <label>Удовлетворенность работой (0-100):</label>
-        <input type="number" name="satisfaction" min="0" max="100" required>
+    <div class="form-container">
+        <h2>Введите данные студента</h2>
+        <form action="/predict" method="post">
 
-        <label>Последняя оценка (0-100):</label>
-        <input type="number" name="evaluation" min="0" max="100" required>
+            <!-- Вопросы в точном порядке из app.py -->
 
-        <label>Количество проектов:</label>
-        <input type="number" name="projects" required>
+            <label>Пол:</label>
+            <select name="Gender" required>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+            </select>
 
-        <label>Среднее количество часов в месяц:</label>
-        <input type="number" name="hours" required>
+            <label>Возраст (18-60):</label>
+            <input type="number" name="Age" min="18" max="60" required>
 
-        <label>Лет в компании:</label>
-        <input type="number" name="tenure" required>
+            <label>Академическое давление (0.0-5.0):</label>
+            <input type="number" name="Academic Pressure" min="0" max="5" step="0.1" required>
 
-        <input type="submit" value="Предсказать увольнение">
-    </form>
+            <label>Рабочее давление (0.0-5.0):</label>
+            <input type="number" name="Work Pressure" min="0" max="5" step="0.1" required>
+
+            <label>CGPA (0.0-10.0):</label>
+            <input type="number" name="CGPA" min="0" max="10" step="0.1" required>
+
+            <label>Удовлетворенность учебой (0.0-5.0):</label>
+            <input type="number" name="Study Satisfaction" min="0" max="5" step="0.1" required>
+
+            <label>Удовлетворенность работой (0.0-5.0):</label>
+            <input type="number" name="Job Satisfaction" min="0" max="5" step="0.1" required>
+
+            <label>Продолжительность сна:</label>
+            <select name="Sleep Duration" required>
+                <option value="Less than 5 hours">Less than 5 hours</option>
+                <option value="5-6 hours">5-6 hours</option>
+                <option value="6-7 hours">6-7 hours</option>
+                <option value="7-8 hours">7-8 hours</option>
+                <option value="More than 8 hours">More than 8 hours</option>
+                <option value="Others">Others</option>
+            </select>
+
+            <label>Пищевые привычки:</label>
+            <select name="Dietary Habits" required>
+                <option value="Unhealthy">Unhealthy</option>
+                <option value="Moderate">Moderate</option>
+                <option value="Healthy">Healthy</option>
+                <option value="Others">Others</option>
+            </select>
+
+            <label>Степень:</label>
+            <select name="Degree" required>
+                <option value="B.Arch">B.Arch</option>
+                <option value="B.Com">B.Com</option>
+                <option value="B.Ed">B.Ed</option>
+                <option value="B.Pharm">B.Pharm</option>
+                <option value="B.Tech">B.Tech</option>
+                <option value="BA">BA</option>
+                <option value="BBA">BBA</option>
+                <option value="BCA">BCA</option>
+                <option value="BE">BE</option>
+                <option value="BHM">BHM</option>
+                <option value="BSc">BSc</option>
+                <option value="Class 12">Class 12</option>
+                <option value="LLB">LLB</option>
+                <option value="LLM">LLM</option>
+                <option value="M.Com">M.Com</option>
+                <option value="M.Ed">M.Ed</option>
+                <option value="M.Pharm">M.Pharm</option>
+                <option value="M.Tech">M.Tech</option>
+                <option value="MA">MA</option>
+                <option value="MBA">MBA</option>
+                <option value="MBBS">MBBS</option>
+                <option value="MCA">MCA</option>
+                <option value="MD">MD</option>
+                <option value="ME">ME</option>
+                <option value="MHM">MHM</option>
+                <option value="MSc">MSc</option>
+                <option value="PhD">PhD</option>
+                <option value="Others">Others</option>
+            </select>
+
+            <label>Были ли у вас суицидальные мысли?:</label>
+            <select name="Have you ever had suicidal thoughts ?" required>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+
+            <label>Часы работы/учебы (0.0-12.0):</label>
+            <input type="number" name="Work/Study Hours" min="0" max="12" step="0.1" required>
+
+            <label>Финансовый стресс (0.0-5.0):</label>
+            <input type="number" name="Financial Stress" min="0" max="5" step="0.1" required>
+
+            <label>Семейная история психических заболеваний:</label>
+            <select name="Family History of Mental Illness" required>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+
+            <input type="submit" value="Проверить риск депрессии" class="submit-btn">
+        </form>
+    </div>
 </body>
 </html>
