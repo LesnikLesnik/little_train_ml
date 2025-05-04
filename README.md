@@ -1,4 +1,4 @@
-# HR Attrition Prediction
+# Student depression Prediction
 
 ## Описание проекта
 
