@@ -3,29 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <title>Результат прогноза</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
     <div class="result-container">
-        <h2>Результат предсказания текучести</h2>
+        <h2>Результат предсказания депрессии</h2>
 
-        <div class="prediction-result {% if prediction.prediction == 'Yes' %}high-risk{% else %}low-risk{% endif %}">
-            <p>Прогноз: <strong>{{ 'Высокий риск увольнения' if prediction.prediction == 'Yes' else 'Низкий риск увольнения' }}</strong></p>
-            <p>Вероятность увольнения: <strong>{{ prediction.probability }}%</strong></p>
+        <div class="prediction-result {% if prediction == 1 %}high-risk{% else %}low-risk{% endif %}">
+            <p>Прогноз: <strong>{{ 'Высокий риск депрессии' if prediction == 1 else 'Низкий риск депрессии' }}</strong></p>
+            <p>Вероятность: <strong>{{ "%.1f"|format(probability * 100) }}%</strong></p>
         </div>
 
         <div class="recommendations">
-            {% if prediction.prediction == 'Yes' %}
+            {% if prediction == 1 %}
                 <h3>Рекомендации:</h3>
                 <ul>
-                    <li>Провести индивидуальную беседу с сотрудником</li>
-                    <li>Рассмотреть возможность повышения или ротации</li>
-                    <li>Оценить уровень удовлетворенности</li>
+                    <li>Рекомендуется обратиться к специалисту</li>
+                    <li>Попробуйте увеличить продолжительность сна</li>
+                    <li>Рассмотрите возможность консультации в университетском центре психологической помощи</li>
                 </ul>
             {% endif %}
         </div>
 
-        <a href="/" class="back-btn">← Проверить другого сотрудника</a>
+        <a href="/" class="back-btn">← Проверить другого студента</a>
     </div>
 </body>
 </html>

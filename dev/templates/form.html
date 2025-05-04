@@ -2,165 +2,109 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>HR Attrition Predictor</title>
+    <title>Student Depression Prediction</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <div class="form-container">
-        <h2>Введите данные сотрудника</h2>
+        <h2>Введите данные студента</h2>
         <form action="/predict" method="post">
 
-            <!-- Основная информация -->
-            <fieldset>
-                <legend>Основная информация</legend>
+            <!-- Вопросы в точном порядке из app.py -->
 
-                <label>Возраст (18-60):</label>
-                <input type="number" name="Age" min="18" max="60" required>
+            <label>Пол:</label>
+            <select name="Gender" required>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+            </select>
 
-                <label>Пол:</label>
-                <select name="Gender" required>
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                </select>
+            <label>Возраст (18-60):</label>
+            <input type="number" name="Age" min="18" max="60" required>
 
-                <label>Семейное положение:</label>
-                <select name="MaritalStatus" required>
-                    <option value="Single">Single</option>
-                    <option value="Married">Married</option>
-                    <option value="Divorced">Divorced</option>
-                </select>
-            </fieldset>
+            <label>Академическое давление (0.0-5.0):</label>
+            <input type="number" name="Academic Pressure" min="0" max="5" step="0.1" required>
 
-            <!-- Профессиональная информация -->
-            <fieldset>
-                <legend>Профессиональная информация</legend>
+            <label>Рабочее давление (0.0-5.0):</label>
+            <input type="number" name="Work Pressure" min="0" max="5" step="0.1" required>
 
-                <label>Отдел:</label>
-                <select name="Department" required>
-                    <option value="Sales">Sales</option>
-                    <option value="Research & Development">Research & Development</option>
-                    <option value="Human Resources">Human Resources</option>
-                </select>
+            <label>CGPA (0.0-10.0):</label>
+            <input type="number" name="CGPA" min="0" max="10" step="0.1" required>
 
-                <label>Должность:</label>
-                <select name="JobRole" required>
-                    <option value="Sales Executive">Sales Executive</option>
-                    <option value="Research Scientist">Research Scientist</option>
-                    <option value="Laboratory Technician">Laboratory Technician</option>
-                    <option value="Manufacturing Director">Manufacturing Director</option>
-                    <option value="Healthcare Representative">Healthcare Representative</option>
-                    <option value="Manager">Manager</option>
-                    <option value="Sales Representative">Sales Representative</option>
-                    <option value="Research Director">Research Director</option>
-                    <option value="Human Resources">Human Resources</option>
-                </select>
+            <label>Удовлетворенность учебой (0.0-5.0):</label>
+            <input type="number" name="Study Satisfaction" min="0" max="5" step="0.1" required>
 
-                <label>Уровень образования (1-5):</label>
-                <input type="number" name="Education" min="1" max="5" required>
+            <label>Удовлетворенность работой (0.0-5.0):</label>
+            <input type="number" name="Job Satisfaction" min="0" max="5" step="0.1" required>
 
-                <label>Область образования:</label>
-                <select name="EducationField" required>
-                    <option value="Life Sciences">Life Sciences</option>
-                    <option value="Medical">Medical</option>
-                    <option value="Marketing">Marketing</option>
-                    <option value="Technical Degree">Technical Degree</option>
-                    <option value="Other">Other</option>
-                    <option value="Human Resources">Human Resources</option>
-                </select>
+            <label>Продолжительность сна:</label>
+            <select name="Sleep Duration" required>
+                <option value="Less than 5 hours">Less than 5 hours</option>
+                <option value="5-6 hours">5-6 hours</option>
+                <option value="6-7 hours">6-7 hours</option>
+                <option value="7-8 hours">7-8 hours</option>
+                <option value="More than 8 hours">More than 8 hours</option>
+                <option value="Others">Others</option>
+            </select>
 
-                <label>Уровень должности (1-5):</label>
-                <input type="number" name="JobLevel" min="1" max="5" required>
-            </fieldset>
+            <label>Пищевые привычки:</label>
+            <select name="Dietary Habits" required>
+                <option value="Unhealthy">Unhealthy</option>
+                <option value="Moderate">Moderate</option>
+                <option value="Healthy">Healthy</option>
+                <option value="Others">Others</option>
+            </select>
 
-            <!-- Рабочие условия -->
-            <fieldset>
-                <legend>Рабочие условия</legend>
+            <label>Степень:</label>
+            <select name="Degree" required>
+                <option value="B.Arch">B.Arch</option>
+                <option value="B.Com">B.Com</option>
+                <option value="B.Ed">B.Ed</option>
+                <option value="B.Pharm">B.Pharm</option>
+                <option value="B.Tech">B.Tech</option>
+                <option value="BA">BA</option>
+                <option value="BBA">BBA</option>
+                <option value="BCA">BCA</option>
+                <option value="BE">BE</option>
+                <option value="BHM">BHM</option>
+                <option value="BSc">BSc</option>
+                <option value="Class 12">Class 12</option>
+                <option value="LLB">LLB</option>
+                <option value="LLM">LLM</option>
+                <option value="M.Com">M.Com</option>
+                <option value="M.Ed">M.Ed</option>
+                <option value="M.Pharm">M.Pharm</option>
+                <option value="M.Tech">M.Tech</option>
+                <option value="MA">MA</option>
+                <option value="MBA">MBA</option>
+                <option value="MBBS">MBBS</option>
+                <option value="MCA">MCA</option>
+                <option value="MD">MD</option>
+                <option value="ME">ME</option>
+                <option value="MHM">MHM</option>
+                <option value="MSc">MSc</option>
+                <option value="PhD">PhD</option>
+                <option value="Others">Others</option>
+            </select>
 
-                <label>Командировки:</label>
-                <select name="BusinessTravel" required>
-                    <option value="Non-Travel">Non-Travel</option>
-                    <option value="Travel_Rarely">Travel_Rarely</option>
-                    <option value="Travel_Frequently">Travel_Frequently</option>
-                </select>
+            <label>Были ли у вас суицидальные мысли?:</label>
+            <select name="Have you ever had suicidal thoughts ?" required>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
 
-                <label>Расстояние до работы (1-30 км):</label>
-                <input type="number" name="DistanceFromHome" min="1" max="30" required>
+            <label>Часы работы/учебы (0.0-12.0):</label>
+            <input type="number" name="Work/Study Hours" min="0" max="12" step="0.1" required>
 
-                <label>Сверхурочные:</label>
-                <select name="OverTime" required>
-                    <option value="No">No</option>
-                    <option value="Yes">Yes</option>
-                </select>
+            <label>Финансовый стресс (0.0-5.0):</label>
+            <input type="number" name="Financial Stress" min="0" max="5" step="0.1" required>
 
-                <label>Вовлеченность в работу (1-4):</label>
-                <input type="number" name="JobInvolvement" min="1" max="4" required>
+            <label>Семейная история психических заболеваний:</label>
+            <select name="Family History of Mental Illness" required>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
 
-                <label>Удовлетворенность работой (1-4):</label>
-                <input type="number" name="JobSatisfaction" min="1" max="4" required>
-
-                <label>Удовлетворенность окружением (1-4):</label>
-                <input type="number" name="EnvironmentSatisfaction" min="1" max="4" required>
-
-                <label>Удовлетворенность отношениями (1-4):</label>
-                <input type="number" name="RelationshipSatisfaction" min="1" max="4" required>
-
-                <label>Баланс работы/жизни (1-4):</label>
-                <input type="number" name="WorkLifeBalance" min="1" max="4" required>
-
-                <label>Оценка производительности (1-4):</label>
-                <input type="number" name="PerformanceRating" min="1" max="4" required>
-            </fieldset>
-
-            <!-- Финансовая информация -->
-            <fieldset>
-                <legend>Финансовая информация</legend>
-
-                <label>Ежедневная ставка (100-15000):</label>
-                <input type="number" name="DailyRate" min="100" max="15000" required>
-
-                <label>Часовая ставка (30-100):</label>
-                <input type="number" name="HourlyRate" min="30" max="100" required>
-
-                <label>Месячный доход (1000-20000):</label>
-                <input type="number" name="MonthlyIncome" min="1000" max="20000" required>
-
-                <label>Месячная ставка (2000-30000):</label>
-                <input type="number" name="MonthlyRate" min="2000" max="30000" required>
-
-                <label>Процент повышения зарплаты (10-25%):</label>
-                <input type="number" name="PercentSalaryHike" min="10" max="25" required>
-
-                <label>Уровень опционов (0-3):</label>
-                <input type="number" name="StockOptionLevel" min="0" max="3" required>
-            </fieldset>
-
-            <!-- Опыт работы -->
-            <fieldset>
-                <legend>Опыт работы</legend>
-
-                <label>Количество компаний (0-10):</label>
-                <input type="number" name="NumCompaniesWorked" min="0" max="10" required>
-
-                <label>Общий стаж работы (0-40 лет):</label>
-                <input type="number" name="TotalWorkingYears" min="0" max="40" required>
-
-                <label>Стаж в компании (0-40 лет):</label>
-                <input type="number" name="YearsAtCompany" min="0" max="40" required>
-
-                <label>В текущей роли (0-18 лет):</label>
-                <input type="number" name="YearsInCurrentRole" min="0" max="18" required>
-
-                <label>С последнего повышения (0-15 лет):</label>
-                <input type="number" name="YearsSinceLastPromotion" min="0" max="15" required>
-
-                <label>С текущим менеджером (0-17 лет):</label>
-                <input type="number" name="YearsWithCurrManager" min="0" max="17" required>
-
-                <label>Обучений в прошлом году (0-6):</label>
-                <input type="number" name="TrainingTimesLastYear" min="0" max="6" required>
-            </fieldset>
-
-            <input type="submit" value="Предсказать текучесть" class="submit-btn">
+            <input type="submit" value="Проверить риск депрессии" class="submit-btn">
         </form>
     </div>
 </body>
