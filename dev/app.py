@@ -1,37 +1,21 @@
-from flask import Flask, render_template, request, jsonify
-import pandas as pd
-import joblib
-import os
-
-app = Flask(__name__)
-
-# Загрузка модели
-model_data = joblib.load('model/student_depression_model.pkl')
-model = model_data['model']
-feature_columns = model_data['feature_columns']
-
-
-@app.route("/")
-def index():
-    return render_template("form.html")
-
-
 from flask import Flask, render_template, request
 import pandas as pd
 import joblib
+from controllers.model_info_controller import model_info_bp
 
 app = Flask(__name__)
+
+# Регистрируем Blueprint
+app.register_blueprint(model_info_bp)
 
 # Загрузка модели
 model_data = joblib.load('model/student_depression_model.pkl')
 model = model_data['model']
 feature_columns = model_data['feature_columns']
 
-
 @app.route("/")
 def index():
     return render_template("form.html")
-
 
 @app.route("/predict", methods=["POST"])
 def predict():
@@ -69,6 +53,5 @@ def predict():
     except Exception as e:
         return render_template("error.html", error=str(e))
 
-
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8080, debug=True)
+    app.run(host="127.0.0.1", port=8080, debug=True)

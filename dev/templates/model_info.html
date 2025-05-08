@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Информация о модели</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="model-info-container">
+        <a href="{{ url_for('index') }}" class="back-btn">← Назад к форме</a>
+
+        <h1>Информация о модели выявления депрессии у студентов</h1>
+
+        <section>
+            <h2>1. Постановка задачи</h2>
+            <p><strong>Цель:</strong> {{ model_info.task.goal }}</p>
+            <p><strong>Применение:</strong> {{ model_info.task.application }}</p>
+            <p><strong>Датасет:</strong> <a href="{{ model_info.task.dataset.link }}" target="_blank">{{ model_info.task.dataset.name }}</a></p>
+            <ul>
+                <li>{{ model_info.task.dataset.size }}</li>
+                <li>{{ model_info.task.dataset.features }}</li>
+                <li>{{ model_info.task.dataset.balance }}</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>2. Алгоритм</h2>
+            <p><strong>Модель:</strong> {{ model_info.algorithm.name }}</p>
+            <p><strong>Преимущества:</strong></p>
+            <ul>
+                {% for advantage in model_info.algorithm.advantages %}
+                <li>{{ advantage }}</li>
+                {% endfor %}
+            </ul>
+        </section>
+
+        <section>
+            <h2>3. Оценка качества модели</h2>
+            <div class="metric-box">
+                <h3>Матрица ошибок</h3>
+                <table border="1">
+                    <tr>
+                        <td>{{ model_info.metrics.confusion_matrix[0][0] }}</td>
+                        <td>{{ model_info.metrics.confusion_matrix[0][1] }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ model_info.metrics.confusion_matrix[1][0] }}</td>
+                        <td>{{ model_info.metrics.confusion_matrix[1][1] }}</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="metric-box">
+                <h3>Отчет классификации</h3>
+                <p><strong>Accuracy:</strong> <span class="highlight">{{ "%.2f"|format(model_info.metrics.accuracy) }}</span></p>
+                <p><strong>ROC-AUC:</strong> <span class="highlight">{{ "%.4f"|format(model_info.metrics.roc_auc) }}</span></p>
+            </div>
+        </section>
+
+        <section>
+            <h2>4. Визуализации</h2>
+            <div class="image-grid">
+                {% for image in model_info.images %}
+                <div>
+                    <img src="{{ url_for('static', filename='images/' + image) }}" alt="График модели">
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <section>
+            <h2>5. Особенности модели</h2>
+            <p><strong>Сильные стороны:</strong></p>
+            <ul>
+                <li>Высокие метрики для всех классов</li>
+                <li>Точность предсказания депрессии: ~88%</li>
+                <li>Общая точность модели: 84%</li>
+            </ul>
+        </section>
+    </div>
+</body>
+</html>
