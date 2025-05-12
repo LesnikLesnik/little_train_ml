@@ -1,0 +1,70 @@
+/* Dark-themed Start Page */
+body.dark-mode {
+    background-color: #1e1e2f;
+    color: #e0e0e0;
+    font-family: 'Segoe UI', 'Roboto', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.start-container {
+    background-color: #2a2a40;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    text-align: center;
+    max-width: 600px;
+    width: 90%;
+    transition: transform 0.3s ease;
+}
+
+.start-container:hover {
+    transform: scale(1.01);
+}
+
+.start-container h1 {
+    color: #d0bfff;
+    margin-bottom: 20px;
+    font-size: 28px;
+}
+
+.start-container p {
+    font-size: 17px;
+    color: #bbbbd0;
+    margin-bottom: 40px;
+}
+
+.dark-btn {
+    display: inline-block;
+    margin: 10px 15px;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.dark-btn.model {
+    background-color: #3b3f5c;
+    color: #e0e0e0;
+}
+
+.dark-btn.model:hover {
+    background-color: #50546f;
+    box-shadow: 0 4px 12px rgba(100, 100, 150, 0.5);
+}
+
+.dark-btn.predict {
+    background-color: #4a5472;
+    color: #ffffff;
+}
+
+.dark-btn.predict:hover {
+    background-color: #5d6889;
+    box-shadow: 0 4px 12px rgba(120, 120, 180, 0.5);
+}
