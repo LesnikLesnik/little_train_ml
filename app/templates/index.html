@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Главная | Детектор депрессии</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="dark-mode">
+    <div class="start-container">
+        <h1>Выявление депрессии у студентов</h1>
+        <p>Автоматизированный анализ анкетирования студентов для раннего определения признаков депрессии. Используется модель на основе случайного леса с высокой точностью.</p>
+
+        <a href="{{ url_for('model_info.show_model_info') }}" class="dark-btn model">Информация о модели</a>
+        <a href="{{ url_for('predict.form') }}" class="dark-btn predict">Проверить депрессию</a>
+    </div>
+</body>
+</html>
