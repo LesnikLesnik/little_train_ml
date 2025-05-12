@@ -8,8 +8,8 @@ model = components['model']
 # le = components['label_encoder']  # У нас нет меток. У нас они 0 и 1 - для микросекрвиса будут лейблы да нет
 
 # Предобработка (как при обучении) для файлов с лишними колонками и без (тестируем есть ли разница)
-no_change_file = pd.read_csv('Student Depression Dataset.csv').dropna(how='any')
-new_data = pd.read_csv('Student Depression Dataset.csv').dropna(how='any').drop(
+no_change_file = pd.read_csv('../data/Student Depression Dataset.csv').dropna(how='any')
+new_data = pd.read_csv('../data/Student Depression Dataset.csv').dropna(how='any').drop(
     ['id', 'Profession', 'City'], axis=1, errors='ignore')
 
 # Прогнозирование

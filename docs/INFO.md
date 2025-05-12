@@ -35,11 +35,11 @@
 
 
 ## 4. Визуализации
-![img.png](../dev/static/images/img.png)
-![img_1.png](../dev/static/images/img_1.png)
-![img_2.png](../dev/static/images/img_2.png)
-![img_3.png](../dev/static/images/img_3.png)
-![img_4.png](../dev/static/images/img_4.png)
+![img.png](../app/static/images/img.png)
+![img_1.png](../app/static/images/img_1.png)
+![img_2.png](../app/static/images/img_2.png)
+![img_3.png](../app/static/images/img_3.png)
+![img_4.png](../app/static/images/img_4.png)
 
 ## 5. Особенности
 
