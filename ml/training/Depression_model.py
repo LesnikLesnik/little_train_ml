@@ -26,7 +26,7 @@ def print_unique_values(columns):
 
 
 # Загрузка данных
-df = pd.read_csv('Student Depression Dataset.csv')  # всего 28к строк 11.5 (нет)/ 17.5 (да)
+df = pd.read_csv('../data/Student Depression Dataset.csv')  # всего 28к строк 11.5 (нет)/ 17.5 (да)
 df = df.dropna(how='any')  # удалить все строки где есть пустые (таких всего 3)
 
 # Удаление бесполезных столбцов
