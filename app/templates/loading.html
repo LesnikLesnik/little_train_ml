@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Загрузка модели</title>
+</head>
+<body>
+<h2>Модель не найдена</h2>
+<p>Нажмите кнопку для загрузки модели.</p>
+<form action="{{ url_for('model_loader.start_download') }}" method="post">
+    <button type="submit">Загрузить модель</button>
+</form>
+
+</body>
+</html>
