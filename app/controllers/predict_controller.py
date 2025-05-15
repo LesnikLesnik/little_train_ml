@@ -1,10 +1,11 @@
 from flask import Blueprint, render_template, request, redirect, url_for, current_app
 import os
 import joblib
+import traceback
 import pandas as pd
 from ml.model.ensure_model import MODEL_PATH
 
-predict_bp = Blueprint('predict', __name__, url_prefix="/predict", template_folder='../templates')
+predict_bp = Blueprint('predict', __name__, template_folder='../templates')
 
 def load_model():
     """Ленивая загрузка модели из файла"""
@@ -27,8 +28,7 @@ def form():
         return redirect(url_for("model_loader.loading_page"))
     return render_template("form.html")
 
-# TODO пофиксить роутинг /predict/predict
-@predict_bp.route("/predict", methods=["GET", "POST"])
+@predict_bp.route("/predict", methods=["POST"])
 def predict():
     model, feature_columns = get_model_and_features()
     if model is None:
@@ -54,5 +54,6 @@ def predict():
         return render_template("result.html", prediction=prediction, probability=probability)
 
     except Exception as e:
-        print(e.__cause__)
+        error_message = traceback.format_exc()
+        current_app.logger.error(error_message)  # лог в файл или консоль
         return render_template("error.html", error=str(e))
