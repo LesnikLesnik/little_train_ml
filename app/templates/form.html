@@ -8,7 +8,7 @@
 <body>
     <div class="form-container">
         <h2>Введите данные студента</h2>
-        <form action="/predict" method="post">
+        <form action="{{ url_for('predict.predict') }}" method="post">
 
             <!-- Вопросы в точном порядке из app.py -->
 
