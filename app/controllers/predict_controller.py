@@ -1,6 +1,8 @@
 from flask import Blueprint, render_template, request
 import pandas as pd
 import joblib
+import os
+from ml.model.ensure_model import download_model_if_missing
 
 predict_bp = Blueprint('predict', __name__, template_folder='../templates')
 
@@ -9,15 +11,17 @@ model_path = 'ml/model/student_depression_model.pkl'
 model = None
 feature_columns = None
 
-# Загрузка модели при инициализации
 def load_model():
     global model, feature_columns
-    if not model:
+    if model is None:
+        if not os.path.exists(model_path):
+            success = download_model_if_missing()
+            if not success:
+                raise FileNotFoundError("Не удалось загрузить модель.")
+
         model_data = joblib.load(model_path)
         model = model_data['model']
         feature_columns = model_data['feature_columns']
-
-load_model()
 
 @predict_bp.route("/form")
 def form():
@@ -26,6 +30,9 @@ def form():
 @predict_bp.route("/predict", methods=["POST"])
 def predict():
     try:
+        # Загружаем модель при первом вызове
+        load_model()
+
         data = request.form.to_dict()
         input_data = pd.DataFrame([data])
 

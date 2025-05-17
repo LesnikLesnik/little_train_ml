@@ -1,9 +1,7 @@
-version: "3.8"
-
 services:
   app:
     build: .
-    container_name: depression-detect-ml
+    container_name: ml-project-depression
     ports:
       - "8080:8080"
     restart: always

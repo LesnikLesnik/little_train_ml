@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Загрузка модели...</title>
+    <meta http-equiv="refresh" content="0.5; url={{ url_for('model_loader.load_model') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/loading.css') }}">
+</head>
+<body>
+    <div class="loader-fullscreen">
+        <div class="spinner"></div>
+        <div class="spinner-text">Загрузка модели... Пожалуйста, подождите</div>
+    </div>
+</body>
+</html>

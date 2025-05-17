@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Загрузка модели</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/loading.css') }}">
+</head>
+<body class="dark-mode">
+    <div class="loading-container">
+        <h2>Модель не найдена</h2>
+        <p>Нажмите кнопку для загрузки модели.</p>
+        <form action="{{ url_for('model_loader.start_download') }}" method="post">
+            <button type="submit">Загрузить модель</button>
+        </form>
+    </div>
+</body>
+</html>
