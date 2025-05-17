@@ -6,107 +6,134 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <div class="form-container">
-        <h2>Введите данные студента</h2>
-        <form action="{{ url_for('predict.predict') }}" method="post">
+<div class="form-container">
+    <a href="/" class="back-btn">← Назад</a>
 
-            <!-- Вопросы в точном порядке из app.py -->
+    <h2>Введите данные студента</h2>
+    <form action="{{ url_for('predict.predict') }}" method="post">
 
-            <label>Пол:</label>
-            <select name="Gender" required>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-            </select>
+        <label>Пол:</label>
+        <select name="Gender" required>
+            <option value="Male">Мужской</option>
+            <option value="Female">Женский</option>
+        </select>
 
-            <label>Возраст (18-60):</label>
-            <input type="number" name="Age" min="18" max="60" required>
+        <label>Возраст (18–60):</label>
+        <input type="number" name="Age" min="18" max="60" required>
 
-            <label>Академическое давление (0.0-5.0):</label>
-            <input type="number" name="Academic Pressure" min="0" max="5" step="0.1" required>
+        <label>Академическое давление:</label>
+        <select name="Academic Pressure" required>
+            {% for i in range(0, 6) %}
+            <option value="{{ i }}">{{ i }}</option>
+            {% endfor %}
+        </select>
 
-            <label>Рабочее давление (0.0-5.0):</label>
-            <input type="number" name="Work Pressure" min="0" max="5" step="0.1" required>
+        <label>Рабочее давление:</label>
+        <select name="Work Pressure" required>
+            {% for i in range(0, 6) %}
+            <option value="{{ i }}">{{ i }}</option>
+            {% endfor %}
+        </select>
 
-            <label>CGPA (0.0-10.0):</label>
-            <input type="number" name="CGPA" min="0" max="10" step="0.1" required>
+        <label>Средний балл/оценка на учебе:</label>
+        <select name="CGPA" required>
+            {% for i in range(0, 11) %}
+            <option value="{{ i }}">{{ i }}</option>
+            {% endfor %}
+        </select>
 
-            <label>Удовлетворенность учебой (0.0-5.0):</label>
-            <input type="number" name="Study Satisfaction" min="0" max="5" step="0.1" required>
+        <label>Удовлетворенность учебой:</label>
+        <select name="Study Satisfaction" required>
+            {% for i in range(0, 6) %}
+            <option value="{{ i }}">{{ i }}</option>
+            {% endfor %}
+        </select>
 
-            <label>Удовлетворенность работой (0.0-5.0):</label>
-            <input type="number" name="Job Satisfaction" min="0" max="5" step="0.1" required>
+        <label>Удовлетворенность работой:</label>
+        <select name="Job Satisfaction" required>
+            {% for i in range(0, 6) %}
+            <option value="{{ i }}">{{ i }}</option>
+            {% endfor %}
+        </select>
 
-            <label>Продолжительность сна:</label>
-            <select name="Sleep Duration" required>
-                <option value="Less than 5 hours">Less than 5 hours</option>
-                <option value="5-6 hours">5-6 hours</option>
-                <option value="6-7 hours">6-7 hours</option>
-                <option value="7-8 hours">7-8 hours</option>
-                <option value="More than 8 hours">More than 8 hours</option>
-                <option value="Others">Others</option>
-            </select>
+        <label>Продолжительность сна:</label>
+        <select name="Sleep Duration" required>
+            <option value="Less than 5 hours">Менее 5 часов</option>
+            <option value="5-6 hours">5–6 часов</option>
+            <option value="6-7 hours">6–7 часов</option>
+            <option value="7-8 hours">7–8 часов</option>
+            <option value="More than 8 hours">Более 8 часов</option>
+            <option value="Others">Другое</option>
+        </select>
 
-            <label>Пищевые привычки:</label>
-            <select name="Dietary Habits" required>
-                <option value="Unhealthy">Unhealthy</option>
-                <option value="Moderate">Moderate</option>
-                <option value="Healthy">Healthy</option>
-                <option value="Others">Others</option>
-            </select>
+        <label>Пищевые привычки:</label>
+        <select name="Dietary Habits" required>
+            <option value="Unhealthy">Нездоровые</option>
+            <option value="Moderate">Средние</option>
+            <option value="Healthy">Здоровые</option>
+            <option value="Others">Другое</option>
+        </select>
 
-            <label>Степень:</label>
-            <select name="Degree" required>
-                <option value="B.Arch">B.Arch</option>
-                <option value="B.Com">B.Com</option>
-                <option value="B.Ed">B.Ed</option>
-                <option value="B.Pharm">B.Pharm</option>
-                <option value="B.Tech">B.Tech</option>
-                <option value="BA">BA</option>
-                <option value="BBA">BBA</option>
-                <option value="BCA">BCA</option>
-                <option value="BE">BE</option>
-                <option value="BHM">BHM</option>
-                <option value="BSc">BSc</option>
-                <option value="Class 12">Class 12</option>
-                <option value="LLB">LLB</option>
-                <option value="LLM">LLM</option>
-                <option value="M.Com">M.Com</option>
-                <option value="M.Ed">M.Ed</option>
-                <option value="M.Pharm">M.Pharm</option>
-                <option value="M.Tech">M.Tech</option>
-                <option value="MA">MA</option>
-                <option value="MBA">MBA</option>
-                <option value="MBBS">MBBS</option>
-                <option value="MCA">MCA</option>
-                <option value="MD">MD</option>
-                <option value="ME">ME</option>
-                <option value="MHM">MHM</option>
-                <option value="MSc">MSc</option>
-                <option value="PhD">PhD</option>
-                <option value="Others">Others</option>
-            </select>
+        <label>Образовательная ступень:</label>
+        <select name="Degree" required>
+            <option value="Class 12">Среднее общее образование (11–12 класс)</option>
+            <option value="BSc">Бакалавр естественных наук</option>
+            <option value="BA">Бакалавр гуманитарных наук</option>
+            <option value="BBA">Бакалавр менеджмента</option>
+            <option value="BCA">Бакалавр в области ИТ</option>
+            <option value="B.Tech">Бакалавр инженерии и технологий</option>
+            <option value="BE">Бакалавр инженерии</option>
+            <option value="B.Arch">Бакалавр архитектуры</option>
+            <option value="B.Com">Бакалавр коммерции</option>
+            <option value="B.Ed">Бакалавр педагогики</option>
+            <option value="B.Pharm">Бакалавр фармации</option>
+            <option value="BHM">Бакалавр гостиничного дела</option>
+            <option value="LLB">Бакалавр права</option>
+            <option value="MSc">Магистр естественных наук</option>
+            <option value="MA">Магистр гуманитарных наук</option>
+            <option value="MBA">Магистр бизнес-администрирования</option>
+            <option value="MCA">Магистр в области ИТ</option>
+            <option value="M.Tech">Магистр инженерии и технологий</option>
+            <option value="ME">Магистр инженерии</option>
+            <option value="M.Com">Магистр коммерции</option>
+            <option value="M.Ed">Магистр педагогики</option>
+            <option value="M.Pharm">Магистр фармации</option>
+            <option value="MHM">Магистр гостиничного дела</option>
+            <option value="LLM">Магистр права</option>
+            <option value="MBBS">Бакалавр медицины</option>
+            <option value="MD">Доктор медицины</option>
+            <option value="PhD">Кандидат / Доктор наук</option>
+            <option value="Others">Другое</option>
+        </select>
 
-            <label>Были ли у вас суицидальные мысли?:</label>
-            <select name="Have you ever had suicidal thoughts ?" required>
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
-            </select>
+        <label>Были ли у вас суицидальные мысли?:</label>
+        <select name="Have you ever had suicidal thoughts ?" required>
+            <option value="Yes">Да</option>
+            <option value="No">Нет</option>
+        </select>
 
-            <label>Часы работы/учебы (0.0-12.0):</label>
-            <input type="number" name="Work/Study Hours" min="0" max="12" step="0.1" required>
+        <label>Часы работы/учёбы в день:</label>
+        <select name="Work/Study Hours" required>
+            {% for i in range(0, 13) %}
+            <option value="{{ i }}">{{ i }}</option>
+            {% endfor %}
+        </select>
 
-            <label>Финансовый стресс (0.0-5.0):</label>
-            <input type="number" name="Financial Stress" min="0" max="5" step="0.1" required>
+        <label>Финансовый стресс:</label>
+        <select name="Financial Stress" required>
+            {% for i in range(0, 6) %}
+            <option value="{{ i }}">{{ i }}</option>
+            {% endfor %}
+        </select>
 
-            <label>Семейная история психических заболеваний:</label>
-            <select name="Family History of Mental Illness" required>
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
-            </select>
+        <label>Семейная история психических заболеваний:</label>
+        <select name="Family History of Mental Illness" required>
+            <option value="Yes">Да</option>
+            <option value="No">Нет</option>
+        </select>
 
-            <input type="submit" value="Проверить риск депрессии" class="submit-btn">
-        </form>
-
-    </div>
+        <input type="submit" value="Проверить риск депрессии" class="submit-btn">
+    </form>
+</div>
 </body>
 </html>

@@ -14,3 +14,16 @@
     background-color: #223322;
     border-left: 6px solid #4CAF50;
 }
+
+.model-info-container img {
+    max-width: 100%;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: 1px solid #444;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease;
+}
+
+.model-info-container img:hover {
+    transform: scale(1.03);
+}
