@@ -1,81 +1,274 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
-    <title>Информация о модели</title>
-        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <meta charset="UTF-8">
+    <title>Модель для выявления депрессии среди студентов</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <div class="model-info-container">
-        <a href="{{ url_for('home.index') }}" class="back-btn">← Назад на главную</a>
+<div class="model-info-container">
+    <a href="{{ url_for('home.index') }}" class="back-btn">← Назад на главную</a>
 
-        <h1>Информация о модели выявления депрессии у студентов</h1>
+    <h1>Модель для выявления депрессии среди студентов</h1>
 
-        <section>
-            <h2>1. Постановка задачи</h2>
-            <p><strong>Цель:</strong> {{ model_info.task.goal }}</p>
-            <p><strong>Применение:</strong> {{ model_info.task.application }}</p>
-            <p><strong>Датасет:</strong> <a href="{{ model_info.task.dataset.link }}" target="_blank">{{ model_info.task.dataset.name }}</a></p>
-            <ul>
-                <li>{{ model_info.task.dataset.size }}</li>
-                <li>{{ model_info.task.dataset.features }}</li>
-                <li>{{ model_info.task.dataset.balance }}</li>
-            </ul>
-        </section>
+    <section>
+        <h2>Общая постановка задачи</h2>
+        <p>Целью данного проекта является разработка модели машинного обучения для <strong>предварительного выявления
+            депрессии</strong> среди студентов на основе анкетных данных. Модель реализует <strong>бинарную
+            классификацию</strong> (есть/нет депрессии) и предназначена для <strong>сужения выборки</strong> студентов с
+            одновременным <strong>повышением концентрации вероятных случаев депрессии</strong> — этап первичного отбора
+            перед возможным направлением к специалисту.</p>
+    </section>
 
-        <section>
-            <h2>2. Алгоритм</h2>
-            <p><strong>Модель:</strong> {{ model_info.algorithm.name }}</p>
-            <p><strong>Преимущества:</strong></p>
-            <ul>
-                {% for advantage in model_info.algorithm.advantages %}
-                <li>{{ advantage }}</li>
-                {% endfor %}
-            </ul>
-        </section>
+    <section>
+        <h2>Используемый алгоритм: Random Forest</h2>
+        <h3>Причины выбора:</h3>
+        <ul>
+            <li>Эффективен для задач бинарной классификации.</li>
+            <li>Превосходит по результатам одно дерево решений.</li>
+            <li>Обеспечивает хорошую интерпретируемость.</li>
+            <li>Ансамблевый метод, реализующий эффект «коллективного разума».</li>
+        </ul>
+        <h3>Осознаваемые недостатки:</h3>
+        <ul>
+            <li>Возможна меньшая эффективность по сравнению с методами градиентного спуска.</li>
+            <li>Скорость работы может быть ниже по сравнению с альтернативными подходами.</li>
+            <li>Индийский датасет (возможна определенная нерелевантность для российских условий) .</li>
+            <li>Отсутствие градаций тяжести, только бинарный исход.</li>
+        </ul>
+    </section>
 
-        <section>
-            <h2>3. Оценка качества модели</h2>
-            <div class="metric-box">
-                <h3>Матрица ошибок</h3>
-                <table border="1">
-                    <tr>
-                        <td>{{ model_info.metrics.confusion_matrix[0][0] }}</td>
-                        <td>{{ model_info.metrics.confusion_matrix[0][1] }}</td>
-                    </tr>
-                    <tr>
-                        <td>{{ model_info.metrics.confusion_matrix[1][0] }}</td>
-                        <td>{{ model_info.metrics.confusion_matrix[1][1] }}</td>
-                    </tr>
-                </table>
-            </div>
+    <section>
+        <h2>Формулировка задачи</h2>
+        <ul>
+            <li><b>Тип задачи</b>: Бинарная классификация (депрессия = да / нет)</li>
+            <li><b>Задача модели</b>: отобрать подмножество студентов с высокой вероятностью наличия депрессии для
+                направления
+                к специалисту.
+            </li>
+            <li><b>Цель</b>: повысить точность выявления (recall) даже за счёт снижения precision.</li>
+            <li><b>Метод</b>: обогащение выборки — уменьшение объема обследуемых при сохранении подавляющего числа
+                действительно больных.
+            </li>
+        </ul>
+    </section>
 
-            <div class="metric-box">
-                <h3>Отчет классификации</h3>
-                <p><strong>Accuracy:</strong> <span class="highlight">{{ "%.2f"|format(model_info.metrics.accuracy) }}</span></p>
-                <p><strong>ROC-AUC:</strong> <span class="highlight">{{ "%.4f"|format(model_info.metrics.roc_auc) }}</span></p>
-            </div>
-        </section>
+    <section>
+        <h2>Обоснование подхода</h2>
+        <p><b>Постановка задачи</b>: необходимо выявлять потенциальные случаи депрессии среди студентов по набору
+            параметров
+            (задача бинарной классификации – есть/нет депрессии). Модель является первичным способом оценки
+            психологического состояния. На ее основе студентов могут отправить на дальнейшее обследование при подозрении
+            депрессии.</p>
+        <p><b>Обоснование подхода</b>: из-за того, что депрессия – одно из самых опасных психологических состояний,
+            необходимо
+            иметь высокую чувствительность (recall) выявления депрессии. Допускается снижение точности (precision),
+            чтобы не пропустить заболевших.</p>
+        <p><b>Цель</b>: из общей совокупности студентов отобрать меньшую, в несколько раз менее объёмную, но более
+            насыщенную
+            истинно положительными случаями группу.</p>
+    </section>
 
-        <section>
-            <h2>4. Визуализации</h2>
-            <div class="image-grid">
-                {% for image in model_info.images %}
-                <div>
-                    <img src="{{ url_for('static', filename='images/' + image) }}" alt="График модели">
-                </div>
-                {% endfor %}
-            </div>
-        </section>
+    <section>
+        <h2>Метрики и сценарии оценки</h2>
+        <h3>Сценарий 1: Пессимистичный (60% больных)</h3>
+        <ul>
+            <li>Recall: ≥ 90%</li>
+            <li>Precision: ≥ 75%</li>
+        </ul>
+        <h4>Cбалансированные данные </h4>
+        <p>Доля студентов с депрессией в выборке — **60%**, здоровых — **40%** (реальное распределение в исходном
+            датасете).</p>
+        <p>90% студентов, у которых действительно есть депрессия, модель должна корректно идентифицировать как
+            депрессивных.</p>
+        <p>Cреди студентов, предсказанных моделью как депрессивные, в 75% случаев диагноз действительно должен быть
+            подтверждён.</p>
+        <h3>Сценарий 2: Оптимистичный (10% больных)</h3>
+        <ul>
+            <li>Recall: ≥ 90%</li>
+            <li>Precision: ≥ 20%</li>
+        </ul>
+        <h4>Несбалансированные данные</h4>
+        <p>Оптимистичная гипотеза: только <strong>10%</strong> студентов страдают от депрессии, <strong>90%</strong> —
+            здоровы.</p>
+        <p>Даже в условиях значительной несбалансированности классов модель должна улавливать подавляющее большинство
+            настоящих случаев.</p>
+        <p>Допускается высокий уровень ложноположительных срабатываний: модель может направлять «на дообследование» и
+            здоровых студентов, чтобы минимизировать пропуски больных.</p>
+        <p><em>Такой подход оправдан в задачах раннего выявления заболеваний, где важна минимизация пропущенных случаев
+            (false negatives), даже ценой роста ложноположительных (false positives).</em></p>
 
-        <section>
-            <h2>5. Особенности модели</h2>
-            <p><strong>Сильные стороны:</strong></p>
-            <ul>
-                <li>Высокие метрики для всех классов</li>
-                <li>Точность предсказания депрессии: ~88%</li>
-                <li>Общая точность модели: 84%</li>
-            </ul>
-        </section>
-    </div>
+    </section>
+
+    <section>
+        <h2>Результаты</h2>
+        <h3>Сценарий 1: Сбалансированные данные (60%)</h3>
+        <p>Порог вероятности: 0.44</p>
+        <table style="width: 300px; border-collapse: collapse; text-align: center; margin: 20px 0; background-color: #1e1e2f; color: #e0e0e0; border: 1px solid #555;">
+            <tr style="background-color: #2a2a40;">
+                <th></th>
+                <th>Предсказано: Нет</th>
+                <th>Предсказано: Да</th>
+            </tr>
+            <tr>
+                <th>Факт: Нет</th>
+                <td>TN = 1727</td>
+                <td>FP = 586</td>
+            </tr>
+            <tr>
+                <th>Факт: Да</th>
+                <td>FN = 333</td>
+                <td>TP = 2934</td>
+            </tr>
+        </table>
+        <table style="width: 100%; border-collapse: collapse; margin: 20px 0; background-color: #1e1e2f; color: #e0e0e0; font-size: 16px;">
+            <thead>
+            <tr style="background-color: #2a2a40;">
+                <th style="border: 1px solid #444; padding: 8px;">Класс</th>
+                <th style="border: 1px solid #444; padding: 8px;">Precision</th>
+                <th style="border: 1px solid #444; padding: 8px;">Recall</th>
+                <th style="border: 1px solid #444; padding: 8px;">F1-score</th>
+                <th style="border: 1px solid #444; padding: 8px;">Support</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td style="border: 1px solid #444; padding: 8px;">No Depression</td>
+                <td style="border: 1px solid #444; padding: 8px;">0.84</td>
+                <td style="border: 1px solid #444; padding: 8px;">0.75</td>
+                <td style="border: 1px solid #444; padding: 8px;">0.79</td>
+                <td style="border: 1px solid #444; padding: 8px;">2313</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #444; padding: 8px;">Depression</td>
+                <td style="border: 1px solid #444; padding: 8px;">0.83</td>
+                <td style="border: 1px solid #444; padding: 8px;">0.90</td>
+                <td style="border: 1px solid #444; padding: 8px;">0.86</td>
+                <td style="border: 1px solid #444; padding: 8px;">3267</td>
+            </tr>
+            <tr style="background-color: #2a2a40; font-weight: bold;">
+                <td style="border: 1px solid #444; padding: 8px;">Accuracy</td>
+                <td colspan="4" style="border: 1px solid #444; padding: 8px; text-align: center;">0.84</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #444; padding: 8px;">Macro avg</td>
+                <td style="border: 1px solid #444; padding: 8px;">0.84</td>
+                <td style="border: 1px solid #444; padding: 8px;">0.82</td>
+                <td style="border: 1px solid #444; padding: 8px;">0.83</td>
+                <td style="border: 1px solid #444; padding: 8px;">5580</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #444; padding: 8px;">Weighted avg</td>
+                <td style="border: 1px solid #444; padding: 8px;">0.84</td>
+                <td style="border: 1px solid #444; padding: 8px;">0.84</td>
+                <td style="border: 1px solid #444; padding: 8px;">0.83</td>
+                <td style="border: 1px solid #444; padding: 8px;">5580</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <p><strong>Accuracy:</strong> 84%</p>
+        <p><strong>ROC-AUC:</strong> 0.9135</p>
+        <details>
+            <summary>Изображения</summary>
+            <img src="{{ url_for('static', filename='images/balanced/img.png') }}">
+            <img src="{{ url_for('static', filename='images/balanced/img_1.png') }}">
+            <img src="{{ url_for('static', filename='images/balanced/img_2.png') }}">
+            <img src="{{ url_for('static', filename='images/balanced/img_3.png') }}">
+            <img src="{{ url_for('static', filename='images/balanced/img_4.png') }}">
+            <img src="{{ url_for('static', filename='images/balanced/img_5.png') }}">
+        </details>
+
+        <h3>Сценарий 2: Несбалансированные данные (10%)</h3>
+        <p>Порог вероятности: 0.4</p>
+        <table style="width: 300px; border-collapse: collapse; text-align: center; margin: 20px 0; background-color: #1e1e2f; color: #e0e0e0; border: 1px solid #555;">
+            <tr style="background-color: #2a2a40;">
+                <th></th>
+                <th>Предсказано: Нет</th>
+                <th>Предсказано: Да</th>
+            </tr>
+            <tr>
+                <th>Факт: Нет</th>
+                <td>TN = 1727</td>
+                <td>FP = 586</td>
+            </tr>
+            <tr>
+                <th>Факт: Да</th>
+                <td>FN = 333</td>
+                <td>TP = 2934</td>
+            </tr>
+        </table>
+
+        <table style="width: 100%; border-collapse: collapse; margin: 20px 0; background-color: #1e1e2f; color: #e0e0e0; font-size: 16px;">
+            <thead>
+            <tr style="background-color: #2a2a40;">
+                <th style="border: 1px solid #444; padding: 8px;">Класс</th>
+                <th style="border: 1px solid #444; padding: 8px;">Precision</th>
+                <th style="border: 1px solid #444; padding: 8px;">Recall</th>
+                <th style="border: 1px solid #444; padding: 8px;">F1-score</th>
+                <th style="border: 1px solid #444; padding: 8px;">Support</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td style="border: 1px solid #444; padding: 8px;">No Depression</td>
+                <td style="border: 1px solid #444; padding: 8px;">0.99</td>
+                <td style="border: 1px solid #444; padding: 8px;">0.72</td>
+                <td style="border: 1px solid #444; padding: 8px;">0.83</td>
+                <td style="border: 1px solid #444; padding: 8px;">2313</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #444; padding: 8px;">Depression</td>
+                <td style="border: 1px solid #444; padding: 8px;">0.27</td>
+                <td style="border: 1px solid #444; padding: 8px;">0.94</td>
+                <td style="border: 1px solid #444; padding: 8px;">0.42</td>
+                <td style="border: 1px solid #444; padding: 8px;">257</td>
+            </tr>
+            <tr style="background-color: #2a2a40; font-weight: bold;">
+                <td style="border: 1px solid #444; padding: 8px;">Accuracy</td>
+                <td colspan="4" style="border: 1px solid #444; padding: 8px; text-align: center;">0.74</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #444; padding: 8px;">Macro avg</td>
+                <td style="border: 1px solid #444; padding: 8px;">0.63</td>
+                <td style="border: 1px solid #444; padding: 8px;">0.83</td>
+                <td style="border: 1px solid #444; padding: 8px;">0.63</td>
+                <td style="border: 1px solid #444; padding: 8px;">2570</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #444; padding: 8px;">Weighted avg</td>
+                <td style="border: 1px solid #444; padding: 8px;">0.92</td>
+                <td style="border: 1px solid #444; padding: 8px;">0.74</td>
+                <td style="border: 1px solid #444; padding: 8px;">0.79</td>
+                <td style="border: 1px solid #444; padding: 8px;">2570</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <p><strong>Accuracy:</strong> 74%</p>
+        <p><strong>ROC-AUC:</strong> 0.9253</p>
+        <details>
+            <summary>Изображения</summary>
+            <img src="{{ url_for('static', filename='images/non_balanced/img.png') }}">
+            <img src="{{ url_for('static', filename='images/non_balanced/img_1.png') }}">
+            <img src="{{ url_for('static', filename='images/non_balanced/img_2.png') }}">
+            <img src="{{ url_for('static', filename='images/non_balanced/img_3.png') }}">
+            <img src="{{ url_for('static', filename='images/non_balanced/img_4.png') }}">
+            <img src="{{ url_for('static', filename='images/non_balanced/img_5.png') }}">
+        </details>
+    </section>
+
+    <section>
+        <h2>Заключение</h2>
+        <ul>
+            <li>Рекомендуемый порог вероятности: 0.4–0.45</li>
+            <li>Модель успешно справляется с задачей</li>
+            <li>Высокие значения precision и recall на сбалансированных данных</li>
+            <li>Надежная работа на несбалансированных выборках</li>
+            <li>Хорошая обобщающая способность</li>
+            <li>Применима для задач раннего выявления депрессии</li>
+        </ul>
+    </section>
+</div>
 </body>
 </html>
