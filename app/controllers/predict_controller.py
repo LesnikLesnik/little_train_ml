@@ -46,8 +46,10 @@ def predict():
 
         input_data = input_data[feature_columns]
 
-        prediction = int(model.predict(input_data)[0])
+       # prediction = int(model.predict(input_data)[0])
         probability = float(model.predict_proba(input_data)[0][1])
+        custom_threshold = 0.4
+        prediction = (probability >= custom_threshold).astype(int)
 
         return render_template("result.html", prediction=prediction, probability=probability)
 
