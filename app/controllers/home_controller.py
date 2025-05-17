@@ -7,6 +7,10 @@ home_bp = Blueprint("home", __name__)
 
 @home_bp.route("/")
 def index():
+
+    print("MODEL PATH:", MODEL_PATH)
+    print("EXISTS:", os.path.exists(MODEL_PATH))
+
     if not os.path.exists(MODEL_PATH):
         return redirect(url_for("model_loader.loading_page"))
 

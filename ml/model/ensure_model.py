@@ -4,7 +4,6 @@ import requests
 MODEL_PATH = "ml/model/student_depression_model.pkl"
 YANDEX_DISK_PUBLIC_URL = "https://disk.yandex.ru/d/IonIz-UDdiYltw"
 
-
 def get_yandex_direct_download(public_url):
     api_url = "https://cloud-api.yandex.net/v1/disk/public/resources/download"
     params = {"public_key": public_url}

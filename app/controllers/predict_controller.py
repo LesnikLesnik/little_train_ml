@@ -1,40 +1,38 @@
-from flask import Blueprint, render_template, request, redirect, url_for, current_app
-import os
-import joblib
-import traceback
+from flask import Blueprint, render_template, request
 import pandas as pd
-from ml.model.ensure_model import MODEL_PATH
+import joblib
+import os
+from ml.model.ensure_model import download_model_if_missing
 
 predict_bp = Blueprint('predict', __name__, template_folder='../templates')
 
-def load_model():
-    """Ленивая загрузка модели из файла"""
-    if current_app.config["ml_model"]["model"] is None:
-        if os.path.exists(MODEL_PATH):
-            model_data = joblib.load(MODEL_PATH)
-            current_app.config["ml_model"]["model"] = model_data['model']
-            current_app.config["ml_model"]["feature_columns"] = model_data['feature_columns']
+# Глобальные переменные
+model_path = 'ml/model/student_depression_model.pkl'
+model = None
+feature_columns = None
 
-def get_model_and_features():
-    load_model()
-    model = current_app.config["ml_model"].get("model")
-    features = current_app.config["ml_model"].get("feature_columns")
-    return model, features
+def load_model():
+    global model, feature_columns
+    if model is None:
+        if not os.path.exists(model_path):
+            success = download_model_if_missing()
+            if not success:
+                raise FileNotFoundError("Не удалось загрузить модель.")
+
+        model_data = joblib.load(model_path)
+        model = model_data['model']
+        feature_columns = model_data['feature_columns']
 
 @predict_bp.route("/form")
 def form():
-    model, _ = get_model_and_features()
-    if model is None:
-        return redirect(url_for("model_loader.loading_page"))
     return render_template("form.html")
 
 @predict_bp.route("/predict", methods=["POST"])
 def predict():
-    model, feature_columns = get_model_and_features()
-    if model is None:
-        return redirect(url_for("model_loader.loading_page"))
-
     try:
+        # Загружаем модель при первом вызове
+        load_model()
+
         data = request.form.to_dict()
         input_data = pd.DataFrame([data])
 
@@ -54,6 +52,4 @@ def predict():
         return render_template("result.html", prediction=prediction, probability=probability)
 
     except Exception as e:
-        error_message = traceback.format_exc()
-        current_app.logger.error(error_message)  # лог в файл или консоль
         return render_template("error.html", error=str(e))
